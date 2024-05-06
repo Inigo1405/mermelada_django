@@ -17,8 +17,7 @@ Run project:
 Create application
 * `python manage.py startapp products`
 
-Make migrations:
-* Control de versiones de db
+Make migrations (Control de versiones de db):
 * `python manage.py makemigrations`
 
 Make database
