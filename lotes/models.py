@@ -25,11 +25,11 @@ class Product(models.Model):
 
 class Lot(models.Model):
     stock = models.IntegerField()
-    sellCost = models.DecimalField(max_digits=10, decimal_places=2)
-    productionCost = models.DecimalField(max_digits=10, decimal_places=2)
+    sell_Cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    production_Cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     product_ID = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True, blank=True)
-    deliveryDate = models.DateTimeField()
-    expiry_Date = models.DateTimeField()
+    delivery_Date = models.DateTimeField(null=True)
+    expiry_Date = models.DateTimeField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -53,27 +53,29 @@ class RawMaterial(models.Model):
 class QualityReport(models.Model):
     description = models.CharField(max_length=150)
     status = models.BooleanField(default=False)
-    lot_ID = models.ForeignKey('Lot', null=False, blank=True, on_delete=models.SET_NULL) 
+    lot_ID = models.ForeignKey('Lot', null=True, blank=True, on_delete=models.SET_NULL) 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.name
+        return self.created_at
     
     
 class Distribution(models.Model):
     destination = models.CharField(max_length=70)
     status = models.BooleanField(default=True)
-    lot_ID = models.ForeignKey('Lot', null=False, blank=True, on_delete=models.SET_NULL) 
+    lot_ID = models.ForeignKey('Lot', null=True, blank=True, on_delete=models.SET_NULL) 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.name
+        return self.destination
     
     
 class Lot_RawMaterial(models.Model):
-    quantity = models.DecimalField(max_digits=10, decimal_places=2)
-    lot_ID = models.ForeignKey('Lot', null=False, blank=True, on_delete=models.SET_NULL) 
-    rowMaterial_ID = models.ForeignKey('RawMaterial', null=False, blank=True, on_delete=models.SET_NULL) 
+    quantity = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    lot_ID = models.ForeignKey('Lot', null=True, blank=True, on_delete=models.SET_NULL) 
+    rowMaterial_ID = models.ForeignKey('RawMaterial', null=True, blank=True, on_delete=models.SET_NULL) 
     
     def __str__(self):
         return self.quantity
