@@ -25,7 +25,10 @@ class Product(models.Model):
 
 class Lot(models.Model):
     stock = models.IntegerField()
+    sellCost = models.DecimalField(max_digits=10, decimal_places=2)
+    productionCost = models.DecimalField(max_digits=10, decimal_places=2)
     product_ID = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True, blank=True)
+    deliveryDate = models.DateTimeField()
     expiry_Date = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -34,7 +37,6 @@ class Lot(models.Model):
         return self.created_at
 
 
-# Tablas Naomi
 class RawMaterial(models.Model):
     name = models.CharField(max_length=60, null=False, blank=False )
     supplier = models.CharField(max_length=60, null=False, blank=False)
@@ -69,9 +71,9 @@ class Distribution(models.Model):
     
     
 class Lot_RawMaterial(models.Model):
-    material = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.DecimalField(max_digits=10, decimal_places=2)
     lot_ID = models.ForeignKey('Lot', null=False, blank=True, on_delete=models.SET_NULL) 
     rowMaterial_ID = models.ForeignKey('RawMaterial', null=False, blank=True, on_delete=models.SET_NULL) 
     
     def __str__(self):
-        return self.material
+        return self.quantity
