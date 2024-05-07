@@ -1,21 +1,31 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
-class Machine(models.Model):
+
+PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
+class ProductionLine(models.Model):
     name = models.CharField(max_length=60)
     description = models.TextField()
-    status = models.BooleanField(default=True)
+    progresField = models.DecimalField(max_digits=3, decimal_places=0, default=0, validators=PERCENTAGE_VALIDATOR)
+    is_available = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self) :
         return self.name
 
+class Flavor(models.Model):
+    name = models.CharField(max_length=60)
+    description = models.TextField()
+    
+    def __str__(self) :
+        return self.name
 
 class Product(models.Model):
     name = models.CharField(max_length=60)
     netContent = models.TextField()
-    flavor = models.CharField(max_length=60)
-    stock = models.IntegerField()
+    flavor_id = models.ForeignKey('Flavor', on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -25,11 +35,11 @@ class Product(models.Model):
 
 class Lot(models.Model):
     stock = models.IntegerField()
-    sell_Cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     production_Cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    product_ID = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True, blank=True)
-    delivery_Date = models.DateTimeField(null=True)
+    qualityStatus = models.BooleanField(default=True)
     expiry_Date = models.DateTimeField(null=True)
+    machine_id = models.ForeignKey('ProductionLine', on_delete=models.SET_NULL, null=True, blank=True)
+    product_ID = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -50,23 +60,14 @@ class RawMaterial(models.Model):
         return self.name
     
     
-class QualityReport(models.Model):
-    description = models.CharField(max_length=150)
-    status = models.BooleanField(default=False)
-    lot_ID = models.ForeignKey('Lot', null=True, blank=True, on_delete=models.SET_NULL) 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
-    def __str__(self):
-        return self.created_at
-    
-    
 class Distribution(models.Model):
     destination = models.CharField(max_length=70)
     status = models.BooleanField(default=True)
+    sell_Cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     lot_ID = models.ForeignKey('Lot', null=True, blank=True, on_delete=models.SET_NULL) 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
     
     def __str__(self):
         return self.destination
