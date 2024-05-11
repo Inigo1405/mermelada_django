@@ -3,7 +3,9 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 
+
 PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
+
 class ProductionLine(models.Model):
     name = models.CharField(max_length=60)
     description = models.TextField()
@@ -12,8 +14,24 @@ class ProductionLine(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-    def __str__(self) :
+    def __str__(self):
         return self.name
+
+    def current_machine(self):
+        if self.progresField == 100:
+            return 'Finished Machine'
+        elif self.progresField > 80 and self.progresField <= 99:
+            return 'Labeling and Sealing Machine'
+        elif self.progresField > 60 and self.progresField <= 80:
+            return 'Filling'
+        elif self.progresField > 40 and self.progresField <= 60:
+            return 'Cooking Kettle'
+        elif self.progresField > 20 and self.progresField <= 40:
+            return 'Fruit Crusher'
+        elif self.progresField > 0 and self.progresField <= 20:
+            return 'Fruit Washer'
+        else:
+            return 'Not started'
 
 class Flavor(models.Model):
     name = models.CharField(max_length=60)
