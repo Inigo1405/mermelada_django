@@ -14,16 +14,15 @@
             <h1>Frambu Systems</h1>
         </div>
         <div class="right">
-            <a href="#">Log in</a>
+            <a href="{% url 'login' %}">Log in</a>
             <a href="#">Sign up</a>
         </div>
     </nav>
 
     <div class="welcome">
         <h2>Welcome</h2>
-        <p>David Bojalil Abiti</p>
-        <p>Naomi Díaz Hurtado</p>
-        <p>Iñigo Quintana Delgadillo</p>
+        <p>When it comes to jams, we're the nation's pride, with flavors that will make you open wide.</p>
+        <img src="{% static 'img/jam.png' %}" alt="Jam" class="jam-image">
     </div>
 </body>
 </html>
