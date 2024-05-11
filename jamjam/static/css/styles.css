@@ -36,3 +36,8 @@ body {
     }
   }
   
+  .jam-image {
+    width: 200px; /* Cambia el valor según sea necesario */
+    height: auto; /* Esto mantendrá la proporción de la imagen */
+    margin-bottom: 20px;
+}
