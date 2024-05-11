@@ -28,12 +28,12 @@ nav {
 .welcome {
   text-align: center;
   margin-top: 50px;
-  flex: 1; /* Ocupa el espacio disponible */
+  flex: 1; 
 }
 
 
 .jam-image {
-  width: 200px; /* Cambia el valor según sea necesario */
-  height: auto; /* Esto mantendrá la proporción de la imagen */
+  width: 200px; 
+  height: auto; 
   margin-bottom: 20px;
 }
