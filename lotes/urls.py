@@ -7,4 +7,7 @@ urlpatterns = [ #Lista que tiene el registro de todas las direcciones
     path('production_update/', views.production_update, name='production_update'),
     path('flavors/<int:id>/', views.flavor_crud, name='flavor_crud_id'),
     path('flavors/', views.flavor_crud, name='flavor_crud'),
+    path('login/', views.login, name='login'),
+    path('products/', views.list_products, name='products')
 ]
+   

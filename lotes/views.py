@@ -1,9 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import ProductionLine, Flavor
-from .forms import FlavorForm, ProductionLineUpdateForm
+from .models import ProductionLine, Flavor, Product
+from .forms import FlavorForm, ProductionLineUpdateForm, ProductForm
 
+# Create your views here.
 def home(request): #se llama 'home'porque es la función de la url que se llama 'home'
     return render(request,'index.html', {})
+
+def login(requets): #Para el html de login
+    return render(requets,'login.html',{})
+
+def list_products(request):
+    products = Product.objects.all() #NO SE TE OLVIDE NAOMI: Para traerlos todos
+    return render(request,'products.html',{'products': products}) #Se pone como diccionario porque los guardamos como json
+
 
 def production(request):
     lines = ProductionLine.objects.all()
@@ -20,6 +29,25 @@ def production_update(request):
     else:
         lines = ProductionLine.objects.all()
         return render(request, 'production_update.html', {'lines': lines})  # Use the same template or a different one if needed
+
+
+
+def manage_products(request):
+    if request.method == 'POST':
+        if 'delete' in request.POST:
+            product_id = request.POST.get('delete')
+            product = get_object_or_404(Product, id=product_id)
+            product.delete()
+            return redirect('manage_products')
+        else:
+            form = ProductForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('manage_products')
+    else:
+        products = Product.objects.all()
+        form = ProductForm()
+    return render(request, 'manage_products.html', {'products': products, 'form': form})
 
 
 
