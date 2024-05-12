@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import UserManager
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
@@ -95,3 +96,7 @@ class Lot_RawMaterial(models.Model):
     
     def __str__(self):
         return str(self.id)
+    
+    
+class CustomUser(UserManager):
+    def _create_user(self, email, password, **extra_fields):
