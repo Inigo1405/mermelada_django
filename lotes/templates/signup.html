@@ -1,0 +1,29 @@
+<!-- signup.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up - PingulJam Systems</title>
+
+</head>
+<body>
+<div class="container">
+    <form action="{% url 'signup' %}" method="POST" class="screen-1">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="login">Sign Up</button>
+      {% if form.non_field_errors %}
+        <div class="error">{{ form.non_field_errors }}</div>
+      {% endif %}
+      {% for field in form %}
+        {% if field.errors %}
+          <div class="error">
+            {{ field.errors }}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </form>
+</div>
+</body>
+</html>

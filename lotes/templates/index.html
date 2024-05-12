@@ -14,9 +14,18 @@
             <h1>Frambu Systems</h1>
         </div>
         <div class="right">
-            <a href="{% url 'login' %}">Log in</a>
-            <a href="{% url 'products' %}">Products</a>
-            <a href="#">Sign up</a>
+            {% if user.is_authenticated %}
+                {% if user.profile.is_manager %}
+                    <a href="{% url 'manager_dashboard' %}">Manager Dashboard</a>
+                    <a href="{% url 'logout' %}">Log out</a>
+                {% else %}
+                    <a href="{% url 'customer_dashboard' %}">Customer Dashboard</a>
+                    <a href="{% url 'logout' %}">Log out</a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'login' %}">Log in</a>
+                <a href="{% url 'signup' %}">Sign up</a>  <!-- Assuming you have a sign-up view set up -->
+            {% endif %}
         </div>
     </nav>
 

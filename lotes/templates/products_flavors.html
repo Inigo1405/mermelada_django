@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Products and Flavors</title>
+</head>
+<body>
+    <h1>Products</h1>
+    <ul>
+        {% for product in products %}
+        <li>{{ product.name }} - {{ product.netContent }}</li>
+        {% endfor %}
+    </ul>
+    <h1>Flavors</h1>
+    <ul>
+        {% for flavor in flavors %}
+        <li>{{ flavor.name }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
