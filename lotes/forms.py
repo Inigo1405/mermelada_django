@@ -1,5 +1,7 @@
 from django import forms
-from .models import Flavor, ProductionLine, Product
+from .models import Flavor, ProductionLine, Product, Profile
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class FlavorForm(forms.ModelForm):
     class Meta:
@@ -21,3 +23,11 @@ class ProductForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'netContent': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }
+
+
+class SignUpForm(UserCreationForm):
+    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')

@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Manager Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Manager Dashboard</h1>
+        <nav>
+            <a href="{% url 'production_update' %}">Update Production Line</a>
+            <a href="{% url 'flavor_crud' %}">Manage Flavors</a>
+            <a href="{% url 'manage_products' %}">Manage Products</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </nav>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <title>Jam</title>
+</head>
+
+<body>
+    <nav>
+        <div class="left">
+            <h1>Frambu Systems</h1>
+        </div>
+        <div class="right">
+            {% if user.is_authenticated %}
+                {% if user.profile.is_manager %}
+                    <a href="{% url 'manager_dashboard' %}">Manager Dashboard</a>
+                    <a href="{% url 'logout' %}">Log out</a>
+                {% else %}
+                    <a href="{% url 'customer_dashboard' %}">Customer Dashboard</a>
+                    <a href="{% url 'logout' %}">Log out</a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'login' %}">Log in</a>
+                <a href="{% url 'signup' %}">Sign up</a>  <!-- Assuming you have a sign-up view set up -->
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="welcome">
+        <h2>Welcome</h2>
+        <p>When it comes to jams, we're the nation's pride, with flavors that will make you open wide.</p>
+        <img src="{% static 'img/jam.png' %}" alt="Jam" class="jam-image">
+    </div>
+</body>
+</html>

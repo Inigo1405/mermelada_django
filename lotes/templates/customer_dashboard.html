@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Customer Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, Customer!</h1>
+        <nav>
+            <a href="{% url 'view_production' %}">View Production Status</a>
+            <a href="{% url 'view_products_and_flavors' %}">View Products and Flavors</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </nav>
+    </div>
+</body>
+</html>
