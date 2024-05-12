@@ -3,6 +3,8 @@ from .models import ProductionLine, Flavor, Product
 from .forms import FlavorForm, ProductionLineUpdateForm, ProductForm, SignUpForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
 
 def home(request):
     return render(request, 'index.html', {})
@@ -64,18 +66,24 @@ def flavor_crud(request, id=None):
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST.get('email')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            if hasattr(user, 'profile') and user.profile.is_manager:
-                return redirect('manager_dashboard')
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                if hasattr(user, 'profile') and user.profile.is_manager:
+                    return redirect('manager_dashboard')
+                else:
+                    return redirect('customer_dashboard')
             else:
-                return redirect('customer_dashboard')
+                messages.error(request, 'Invalid username or password.')
         else:
-            return render(request, 'login.html', {'error': 'Invalid credentials'})
-    return render(request, 'login.html')
+            messages.error(request, 'Invalid login attempt. Please try again.')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
 
 def logout_view(request):
     logout(request)
@@ -87,8 +95,8 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user, backend='django.contrib.auth.backends.ModelBackend')  # Log in the new user
-            return redirect('customer_dashboard')  # Redirect to the customer dashboard
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')  
+            return redirect('customer_dashboard') 
         else:
             return render(request, 'signup.html', {'form': form})
     else:

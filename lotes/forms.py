@@ -1,6 +1,6 @@
 from django import forms
 from .models import Flavor, ProductionLine, Product, Profile
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
 class FlavorForm(forms.ModelForm):
