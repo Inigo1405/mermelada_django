@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materias Primas</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/rawMaterial.css' %}">
+</head>
+<body>
+    <h1>Materia Primas</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Disponible</th>
+                <th>Proveedor</th>
+                <th>Costo Unitario</th>
+                <th>Fecha de Vencimiento</th>
+                <th>Registro</th>
+                <th>Última actualización</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for raw_material in rawMaterials %}
+            <tr>
+                <td>{{ raw_material.id }}</td>
+                <td>{{ raw_material.name }}</td>
+                <td>{{ raw_material.is_available }}</td>
+                <td>{{ raw_material.supplier }}</td>
+                <td>{{ raw_material.united_cost }}</td>
+                <td>{{ raw_material.expiry_Date }}</td>
+                <td>{{ raw_material.created_at }}</td>
+                <td>{{ raw_material.updated_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/distribution.css' %}">
+    <title>Distribution</title>
+</head>
+<body>
+    <h1>Distribuciones</h1>
+
+    <table id="tabla-distribuciones">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Destino</th>
+                <th>Costo de Venta</th>
+                <th>Estado</th>
+                <th>Lote</th>
+                <th>Registro</th>
+                <th>Última actualización</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for distribution in distributions %}
+                <tr>
+                    <td>{{ distribution.id }}</td>
+                    <td>{{ distribution.destination }}</td>
+                    <td>{{ distribution.sell_Cost }}</td>
+                    <td>
+                        {% if distribution.status %}
+                            Entregado
+                        {% else %}
+                            Enviando
+                        {% endif %}
+                    </td>
+                    <td>{{ distribution.lot_ID.id }}</td> <!-- Acceder al ID del lote -->
+                    <td>{{ distribution.created_at }}</td>
+                    <td>{{ distribution.updated_at }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

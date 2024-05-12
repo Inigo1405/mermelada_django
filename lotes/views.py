@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import ProductionLine, Flavor, Product
+from .models import ProductionLine, Flavor, Product, Lot, RawMaterial, Distribution
 from .forms import FlavorForm, ProductionLineUpdateForm, ProductForm
 
 # Create your views here.
@@ -70,3 +70,18 @@ def flavor_crud(request, id=None):
     flavors = Flavor.objects.all()
     form = FlavorForm(instance=get_object_or_404(Flavor, id=id) if id else None)
     return render(request, 'flavor_crud.html', {'flavors': flavors, 'form': form})
+
+
+# ToDo: RawMaterial, Lot, distribution
+def lot(request):
+    lots = Lot.objects.all() 
+    return render(request,'lot.html',{'lots': lots})
+
+
+def rawMaterial(request):
+    materials = RawMaterial.objects.all() 
+    return render(request,'rawMaterial.html',{'rawMaterials': materials})
+
+def distribution(request):
+    distributions = Distribution.objects.all() 
+    return render(request,'distribution.html',{'distributions': distributions})

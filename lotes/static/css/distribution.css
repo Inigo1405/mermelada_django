@@ -1,0 +1,39 @@
+/* distribution.css */
+
+/* Estilo básico para la tabla */
+#tabla-distribuciones {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#tabla-distribuciones th,
+#tabla-distribuciones td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#tabla-distribuciones th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+/* Estilo para las filas alternas */
+#tabla-distribuciones tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Estilo para las celdas de estado */
+#tabla-distribuciones td.estado {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+#tabla-distribuciones td.estado.activo {
+    background-color: green;
+}
+
+#tabla-distribuciones td.estado.inactivo {
+    background-color: red;
+}

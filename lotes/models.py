@@ -53,14 +53,14 @@ class Lot(models.Model):
     stock = models.IntegerField()
     production_Cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     qualityStatus = models.BooleanField(default=True)
-    expiry_Date = models.DateTimeField(null=True)
+    expiry_Date = models.DateTimeField(null=False)
     machine_id = models.ForeignKey('ProductionLine', on_delete=models.SET_NULL, null=True, blank=True)
     product_ID = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self) :
-        return self.created_at
+        return self.created_at.strftime("%Y-%m-%d %H:%M:%S")
 
 
 class RawMaterial(models.Model):
@@ -84,7 +84,6 @@ class Distribution(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-    
     def __str__(self):
         return self.destination
     
@@ -95,4 +94,4 @@ class Lot_RawMaterial(models.Model):
     rowMaterial_ID = models.ForeignKey('RawMaterial', null=True, blank=True, on_delete=models.SET_NULL) 
     
     def __str__(self):
-        return self.quantity
+        return str(self.id)
