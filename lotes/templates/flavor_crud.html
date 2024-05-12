@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flavor Management</title>
+</head>
+<body>
+    <h1>Manage Flavors</h1>
+    <div id="form_area">
+        <form method="post" style="display: none;" id="flavor_form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" name="create_or_update">Save Flavor</button>
+        </form>
+    </div>
+    <button onclick="showForm()">Add New Flavor</button>
+    <ul>
+        {% for flavor in flavors %}
+        <li>
+            {{ flavor.name }}
+            <button onclick="editFlavor({{ flavor.id }})">Edit</button>
+            <form method="post" action="{% url 'flavor_crud_id' flavor.id %}">
+                {% csrf_token %}
+                <button type="submit" name="delete">Delete</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        function showForm() {
+            document.getElementById('flavor_form').style.display = 'block';
+            document.getElementById('flavor_form').action = '{% url 'flavor_crud' %}';
+        }
+
+        function editFlavor(id) {
+            document.getElementById('flavor_form').style.display = 'block';
+            document.getElementById('flavor_form').action = '{% url 'flavor_crud_id' 0 %}'.replace('0', id);
+            // You may want to fill the form with flavor's current data here using AJAX or Django template context
+        }
+    </script>
+</body>
+</html>
