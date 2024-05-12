@@ -1,9 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import ProductionLine, Flavor
+from .models import ProductionLine, Flavor, Product
 from .forms import FlavorForm, ProductionLineUpdateForm
 
+# Create your views here.
 def home(request): #se llama 'home'porque es la función de la url que se llama 'home'
     return render(request,'index.html', {})
+
+def login(requets): #Para el html de login
+    return render(requets,'login.html',{})
+
+def list_products(request):
+    products = Product.objects.all() #NO SE TE OLVIDE NAOMI: Para traerlos todos
+    return render(request,'products.html',{'products': products}) #Se pone como diccionario porque los guardamos como json
+
 
 def production(request):
     lines = ProductionLine.objects.all()
@@ -20,7 +29,6 @@ def production_update(request):
     else:
         lines = ProductionLine.objects.all()
         return render(request, 'production_update.html', {'lines': lines})  # Use the same template or a different one if needed
-
 
 
 def flavor_crud(request, id=None):

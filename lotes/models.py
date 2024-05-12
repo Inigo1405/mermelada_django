@@ -3,9 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 
-
 PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
-
 class ProductionLine(models.Model):
     name = models.CharField(max_length=60)
     description = models.TextField()
