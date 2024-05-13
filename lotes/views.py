@@ -139,7 +139,9 @@ def customer_dashboard(request):
 @login_required
 def lot(request):
     lots = Lot.objects.all() 
-    return render(request,'lot.html',{'lots': lots})
+    user_profile = request.user.profile
+    context = {'lots': lots, 'user_profile': user_profile}
+    return render(request,'lot.html', context)
 
 @login_required
 def rawMaterial(request):
