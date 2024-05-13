@@ -1,6 +1,6 @@
 from django import forms
 from .models import Flavor, ProductionLine, Product, Profile, Lot
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
 from django.contrib.auth.models import User
 
 class FlavorForm(forms.ModelForm):
@@ -55,3 +55,14 @@ class LotForm(forms.ModelForm):
         if not self.instance.pk:
             cleaned_data['production_Cost'] = cleaned_data.get('stock') * 19
         return cleaned_data
+
+
+
+class EditProfileForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'email',
+            'password'
+        )
