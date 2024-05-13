@@ -8,6 +8,7 @@
 </head>
 <body>
     <h1>Production Line Status</h1>
+    <a href="{% url 'manager_dashboard' %}" class="btn btn-secondary mb-3">Back To Dashboard</a>
     <div class="container">
         <table class="table">
             <thead>
@@ -34,6 +35,9 @@
                                 {{ line.progresField }}%
                             </div>
                         </div>
+                    </td>
+                    <td>
+                        <a href="{% url 'production_update' %}" class="btn btn-primary">Update</a>
                     </td>
                 </tr>
                 {% endfor %}

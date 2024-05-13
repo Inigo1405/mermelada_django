@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container">
-    <p>PingulJam Systems</p>
+  <p><a href="{% url 'home' %}" style="color: #fff; text-decoration: none; font-weight: bold;">PingulJam Systems</a></p>
 </div>
 <form class="screen-1" action="{% url 'login' %}" method="POST">
         {% csrf_token %}

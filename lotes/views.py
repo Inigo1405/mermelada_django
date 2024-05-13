@@ -106,8 +106,6 @@ def signup(request):
 
 @login_required
 def view_production(request):
-    if hasattr(request.user, 'profile') and request.user.profile.is_manager:
-        return redirect('manager_dashboard')
     lines = ProductionLine.objects.all()
     return render(request, 'production.html', {'lines': lines})
 

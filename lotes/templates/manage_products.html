@@ -8,6 +8,7 @@
 <body>
     <div class="container mt-4">
         <h1>Manage Products</h1>
+        <a href="{% url 'manager_dashboard' %}" class="btn btn-secondary mb-3">Back To Dashboard</a>
         <form method="post" action="">
             {% csrf_token %}
             {{ form.as_p }}

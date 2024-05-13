@@ -44,3 +44,14 @@ nav {
   height: auto; 
   margin-bottom: 20px;
 }
+
+a.strong-link {
+  color: #000; /* Set your desired color */
+  text-decoration: none; /* Removes underline */
+  font-weight: bold; /* Keeps text bold as you originally had with <strong> */
+}
+
+a.strong-link:hover {
+  color: #555; /* Color change on hover */
+  text-decoration: underline; /* Optionally add underline on hover */
+}
