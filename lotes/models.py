@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
+
 # Create your models here.
 
 PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
@@ -31,12 +32,14 @@ class ProductionLine(models.Model):
         else:
             return 'Not started'
 
+
 class Flavor(models.Model):
     name = models.CharField(max_length=60)
     description = models.TextField()
     
     def __str__(self) :
         return self.name
+
 
 class Product(models.Model):
     name = models.CharField(max_length=60)
@@ -54,6 +57,7 @@ class Lot(models.Model):
     production_Cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     qualityStatus = models.BooleanField(default=True)
     expiry_Date = models.DateTimeField(null=False)
+    user_ID = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True)
     machine_id = models.ForeignKey('ProductionLine', on_delete=models.SET_NULL, null=True, blank=True)
     product_ID = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
