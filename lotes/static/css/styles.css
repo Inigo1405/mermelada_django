@@ -28,9 +28,16 @@ nav {
 .welcome {
   text-align: center;
   margin-top: 50px;
-  flex: 1; 
 }
 
+@media (max-width: 768px) {
+  .left h1 {
+    font-size: 18px;
+  }
+  .right a {
+    font-size: 14px;
+  }
+}
 
 .jam-image {
   width: 200px; 
