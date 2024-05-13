@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import dj_database_url #! Cambios para deploy
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -83,6 +85,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+#! Cambios para deploy
+DATABASES['default'] = dj_database_url.parse("postgres://frambu_pxkm_user:bFQeStUgDZIWpuN7WXgMoCt0Axwg0qKb@dpg-cp0rceg21fec7389n200-a.oregon-postgres.render.com/frambu_pxkm")
 
 
 # Password validation
