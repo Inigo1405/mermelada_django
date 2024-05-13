@@ -18,4 +18,5 @@ urlpatterns = [
     path('manager_dashboard/', views.manager_dashboard, name='manager_dashboard'),
     path('customer_dashboard/', views.customer_dashboard, name='customer_dashboard'),
     path('signup/', views.signup, name='signup'),
+    path('create/', views.tu_vista, name='xd'),
 ]

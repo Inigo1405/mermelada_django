@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import ProductionLine, Flavor, Product, Lot, RawMaterial, Distribution
-from .forms import FlavorForm, ProductionLineUpdateForm, ProductForm, SignUpForm
+from .forms import FlavorForm, ProductionLineUpdateForm, ProductForm, SignUpForm, LotForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -150,3 +150,19 @@ def rawMaterial(request):
 def distribution(request):
     distributions = Distribution.objects.all() 
     return render(request,'distribution.html',{'distributions': distributions})
+
+
+@login_required
+def tu_vista(request):
+    if request.method == 'POST':
+        form = LotForm(request.POST)
+        if form.is_valid():
+            lot = form.save(commit=False)
+            # Asigna el perfil del usuario actual al lote antes de guardarlo
+            lot.user_ID = request.user.profile
+            lot.save()
+            # Redirige a donde quieras
+            return redirect('xd')
+    else:
+        form = LotForm()
+    return render(request, 'createLot.html', {'form': form})
