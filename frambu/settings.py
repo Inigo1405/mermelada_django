@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-import dj_database_url #! Cambios para deploy
+#! Cambios para deploy
+import dj_database_url 
+import os
 
 from pathlib import Path
 
@@ -22,12 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g2-uo+_9v72%3mbg*sscfg&u)nunc0=aeu4g7)x7w+5l$m51w%'
+SECRET_KEY = os.environ.get("SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#! Cambios para deploy
+# DEBUG = True
+# ALLOWED_HOSTS = []
+DEBUG = os.environ.get("DEBUG", "False").lower() == "True"
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
-ALLOWED_HOSTS = []
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # This is Django's default backend
@@ -86,8 +91,10 @@ DATABASES = {
     }
 }
 
+
 #! Cambios para deploy
-DATABASES['default'] = dj_database_url.parse("postgres://frambu_pxkm_user:bFQeStUgDZIWpuN7WXgMoCt0Axwg0qKb@dpg-cp0rceg21fec7389n200-a.oregon-postgres.render.com/frambu_pxkm")
+database_url = os.environ.get("DATABASE_URL")
+DATABASES['default'] = dj_database_url.parse(database_url)
 
 
 # Password validation
