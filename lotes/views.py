@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import ProductionLine, Flavor, Product, Lot, RawMaterial, Distribution
+from .models import ProductionLine, Flavor, Product, Lot, RawMaterial, Distribution, Profile
 from .forms import FlavorForm, ProductionLineUpdateForm, ProductForm, SignUpForm, LotForm, EditProfileForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -11,9 +11,11 @@ from django.contrib.auth.models import User
 def home(request):
     return render(request, 'index.html', {})
 
+
 def production(request):
     lines = ProductionLine.objects.all()
     return render(request, 'production.html', {'lines': lines})
+
 
 @login_required
 def production_update(request):
@@ -27,6 +29,7 @@ def production_update(request):
     else:
         lines = ProductionLine.objects.all()
         return render(request, 'production_update.html', {'lines': lines})
+
 
 @login_required
 def manage_products(request):
@@ -45,6 +48,7 @@ def manage_products(request):
         products = Product.objects.all()
         form = ProductForm()
     return render(request, 'manage_products.html', {'products': products, 'form': form})
+
 
 @login_required
 def flavor_crud(request, id=None):
@@ -66,6 +70,7 @@ def flavor_crud(request, id=None):
     form = FlavorForm(instance=get_object_or_404(Flavor, id=id) if id else None)
     return render(request, 'flavor_crud.html', {'flavors': flavors, 'form': form})
 
+
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -86,6 +91,7 @@ def login_view(request):
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
+
 
 def logout_view(request):
     logout(request)
@@ -113,6 +119,7 @@ def view_production(request):
     lines = ProductionLine.objects.all()
     return render(request, 'production.html', {'lines': lines})
 
+
 @login_required
 def view_products_and_flavors(request):
     if hasattr(request.user, 'profile') and request.user.profile.is_manager:
@@ -124,12 +131,14 @@ def view_products_and_flavors(request):
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
+
 @login_required
 def manager_dashboard(request):
     if hasattr(request.user, 'profile') and request.user.profile.is_manager:
         return render(request, 'manager_dashboard.html', {})
     else:
         return redirect('home')
+
 
 @login_required
 def customer_dashboard(request):
@@ -160,9 +169,9 @@ def distribution(request):
 
 
 @login_required
-def user(request):
+def profile(request):
     user = request.user.profile
-    return render(request, 'user.html', {'user': user})
+    return render(request, 'profile.html', {'user': user})
 
 
 @login_required
@@ -215,3 +224,8 @@ def change_password(request, id):
     else:
         form = PasswordChangeForm(user=request.user)
         return render(request, 'change_password.html', {'form': form})
+    
+
+def users(request):
+    users = Profile.objects.all() 
+    return render(request,'users.html', {'users': users})
