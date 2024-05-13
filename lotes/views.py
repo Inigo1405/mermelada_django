@@ -9,14 +9,6 @@ from django.contrib import messages
 def home(request):
     return render(request, 'index.html', {})
 
-def login(requets): #Para el html de login
-    return render(requets,'login.html',{})
-
-def list_products(request):
-    products = Product.objects.all() #NO SE TE OLVIDE NAOMI: Para traerlos todos
-    return render(request,'products.html',{'products': products}) #Se pone como diccionario porque los guardamos como json
-
-
 def production(request):
     lines = ProductionLine.objects.all()
     return render(request, 'production.html', {'lines': lines})
@@ -71,21 +63,6 @@ def flavor_crud(request, id=None):
     flavors = Flavor.objects.all()
     form = FlavorForm(instance=get_object_or_404(Flavor, id=id) if id else None)
     return render(request, 'flavor_crud.html', {'flavors': flavors, 'form': form})
-
-
-# ToDo: RawMaterial, Lot, distribution
-def lot(request):
-    lots = Lot.objects.all() 
-    return render(request,'lot.html',{'lots': lots})
-
-
-def rawMaterial(request):
-    materials = RawMaterial.objects.all() 
-    return render(request,'rawMaterial.html',{'rawMaterials': materials})
-
-def distribution(request):
-    distributions = Distribution.objects.all() 
-    return render(request,'distribution.html',{'distributions': distributions})
 
 def login_view(request):
     if request.method == 'POST':
@@ -157,3 +134,19 @@ def customer_dashboard(request):
     if hasattr(request.user, 'profile') and request.user.profile.is_manager:
         return redirect('manager_dashboard')
     return render(request, 'customer_dashboard.html')
+
+# ToDo: RawMaterial, Lot, distribution
+@login_required
+def lot(request):
+    lots = Lot.objects.all() 
+    return render(request,'lot.html',{'lots': lots})
+
+@login_required
+def rawMaterial(request):
+    materials = RawMaterial.objects.all() 
+    return render(request,'rawMaterial.html',{'rawMaterials': materials})
+
+@login_required
+def distribution(request):
+    distributions = Distribution.objects.all() 
+    return render(request,'distribution.html',{'distributions': distributions})
