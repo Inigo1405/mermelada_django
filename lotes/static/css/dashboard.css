@@ -1,0 +1,53 @@
+/* dashboard.css */
+body, h1, nav, div {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+.sidebar {
+    background-color: #343a40;
+    color: #fff;
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    padding: 20px;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+.nav-link {
+    color: #ddd;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #f8f9fa;
+}
+
+.nav-link ion-icon {
+    margin-right: 5px;
+}
+
+.table {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 5px;
+}
+
+button.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+button.btn-danger ion-icon {
+    margin-right: 5px;
+}

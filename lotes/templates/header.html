@@ -1,0 +1,10 @@
+<!-- header.html -->
+<div class="user-header">
+    <p>Signed in as: {{ user.username }} | Role: {% if user.profile.is_manager %}Manager{% else %}Customer{% endif %}</p>
+    <a href="{% url 'logout' %}" class="logout">Logout</a>
+    {% if user.profile.is_manager or user_profile.user.is_superuser %}
+        <a href="{% url 'manager_dashboard' %}" class="btn btn-secondary mb-3">Back To Dashboard</a>
+    {% else %}
+        <a href="{% url 'customer_dashboard' %}" class="btn btn-secondary mb-3">Back To Dashboard</a>
+    {% endif %}
+</div>

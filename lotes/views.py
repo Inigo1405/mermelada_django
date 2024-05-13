@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import ProductionLine, Flavor, Product, Lot, RawMaterial, Distribution
-from .forms import FlavorForm, ProductionLineUpdateForm, ProductForm, SignUpForm
-from django.contrib.auth import authenticate, login, logout
+from .models import ProductionLine, Flavor, Product, Lot, RawMaterial, Distribution, Profile
+from .forms import FlavorForm, ProductionLineUpdateForm, ProductForm, SignUpForm, LotForm, EditProfileForm
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 def home(request):
     return render(request, 'index.html', {})
@@ -137,7 +138,9 @@ def customer_dashboard(request):
 @login_required
 def lot(request):
     lots = Lot.objects.all() 
-    return render(request,'lot.html',{'lots': lots})
+    user_profile = request.user.profile
+    context = {'lots': lots, 'user_profile': user_profile}
+    return render(request,'lot.html', context)
 
 @login_required
 def rawMaterial(request):
@@ -148,3 +151,85 @@ def rawMaterial(request):
 def distribution(request):
     distributions = Distribution.objects.all() 
     return render(request,'distribution.html',{'distributions': distributions})
+
+@login_required
+def profile(request):
+    user = request.user.profile
+    return render(request, 'profile.html', {'user': user})
+
+
+@login_required
+def tu_vista(request):
+    if request.method == 'POST':
+        form = LotForm(request.POST)
+        if form.is_valid():
+            lot = form.save(commit=False)
+            # Asigna el perfil del usuario actual al lote antes de guardarlo
+            lot.user_ID = request.user.profile
+            lot.save()
+            # Redirige a donde quieras
+            return redirect('xd')
+    else:
+        form = LotForm()
+    return render(request, 'createLot.html', {'form': form})
+
+
+@login_required
+def manager_dashboard(request):
+    lots = Lot.objects.all()  # Assuming Lot is your model
+    context = {
+        'lots': lots,
+        'user_profile': request.user.profile
+    }
+    return render(request, 'manager_dashboard.html', context)
+
+@login_required
+def customer_dashboard(request):
+    lots = Lot.objects.all()  # Assuming Lot is your model
+    context = {
+        'lots': lots,
+        'user_profile': request.user.profile
+    }
+    return render(request, 'customer_dashboard.html', context)
+
+
+@login_required
+def edit_user(request):
+    if request.method == 'POST':
+        # Rellenar el formulario con los datos del POST
+        form = EditProfileForm(request.POST, instance=request.user)
+        
+        if form.is_valid():
+            # Guardar los cambios en el usuario
+            form.save()
+            return redirect('profile')  # Redirigir a la página de perfil del usuario o donde desees
+    else:
+        # Si no es un POST, crear un formulario con los datos del usuario
+        form = EditProfileForm(instance=request.user)
+        return render(request, 'changeUser.html', {'form': form})
+
+
+@login_required
+def change_password(request, id):
+    if request.method == 'POST':
+        # Rellenar el formulario con los datos del POST
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+        
+        if form.is_valid():
+            # Guardar los cambios en el usuario
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect('user')
+        
+        else:
+            return redirect('changeUser/password')
+
+    else:
+        form = PasswordChangeForm(user=request.user)
+        return render(request, 'change_password.html', {'form': form})
+    
+
+def users(request):
+    users = Profile.objects.all() 
+    return render(request,'users.html', {'users': users})
+

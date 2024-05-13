@@ -1,0 +1,59 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #4f4f4f;
+    color: #333;
+    margin-top: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+header h1 {
+    font-size: 2rem;
+    color: #007bff;
+}
+
+header p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.nav-link {
+    font-size: 1.1rem;
+    color: #007bff;
+    margin-bottom: 0.5rem;
+}
+
+.nav-link ion-icon {
+    margin-right: 8px;
+}
+
+.table {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.logout {
+    float: right;
+    font-size: 1.1rem;
+    color: #dc3545;
+}
+
+.logout ion-icon {
+    vertical-align: bottom;
+}

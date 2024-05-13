@@ -1,35 +1,42 @@
-/* lot.css */
+/* production.css */
 body {
+    background-color: #f4f4f4;
     font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    color: #212529;
 }
 
 h1 {
-    color: #007bff;
-    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
 }
 
-/* Custom styles for table to ensure text isn't too cramped */
-table td, table th {
-    padding: 12px; /* Increased padding for table cells */
+.container {
+    padding: 20px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-top: 20px;
+    border-radius: 8px;
 }
 
-thead {
+.table {
+    margin-top: 20px;
+}
+
+.table th {
     background-color: #007bff;
-    color: #ffffff;
+    color: rgb(0, 0, 0);
 }
 
-tr:nth-child(even) {
-    background-color: #f2f2f2;
+.table td {
+    vertical-align: middle;
 }
 
-td {
-    font-size: 14px;
+.progress {
+    height: 20px;
 }
 
-tr:hover {
-    background-color: #ddd;
+.progress-bar {
+    background-color: #28a745; /* Green to represent progress */
 }
 
 .btn-secondary {
@@ -39,6 +46,13 @@ tr:hover {
 
 .btn-primary {
     float: right; /* Aligns the 'Update' button to the right in each table row */
+}
+
+/* Clear float style */
+.table:after {
+    content: "";
+    display: block;
+    clear: both;
 }
 
 .user-header {

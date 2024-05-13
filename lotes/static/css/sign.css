@@ -111,4 +111,31 @@ input {
     font-weight: 600;
   }
 
-  
+
+  .user-header {
+    background-color: #4a4a4a;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.user-header h1 {
+    color: #ff9500;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.user-header p {
+    color: #ffffff;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.user-header .logout {
+    font-size: 16px;
+    color: #dc3545;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: none;
+    background: transparent;
+}

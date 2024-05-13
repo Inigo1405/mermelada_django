@@ -4,57 +4,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/lot.css' %}">
     <title>Lotes</title>
 </head>
 <body>
-    <h1>Lotes</h1>
-    <a href="{% url 'manager_dashboard' %}" class="btn btn-secondary mb-3">Back To Dashboard</a>
-
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Elementos</th>
-                <th>Productos</th>
-                <th>Costo de producción</th>
-                <th>Fecha de Vencimiento</th>
-                <th>Control de calidad</th>
-                <th>Máquina</th>
-                <th>Orden</th>
-                <th>Última actualización</th>
-                <th>Registro</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for lot in lots %}
-            <tr>
-                <td>{{ lot.id }}</td>
-                <td>{{ lot.stock }}</td>
-                <td>{{ lot.product_ID }}</td>
-                <td>{{ lot.production_Cost }}</td>
-                <td>{{ lot.expiry_Date }}</td>
-                <td>
-                    {% if lot.qualityStatus == True %}
-                        Aprovado
-                    {% else %}
-                        No Aprovado
+    {% include 'header.html' %}
+    <div class="container mt-4">
+        <h1>Lotes</h1>
+        <table class="table table-hover table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Elementos</th>
+                    <th>Productos</th>
+                    <th>Costo de producción</th>
+                    <th>Fecha de Vencimiento</th>
+                    <th>Control de calidad</th>
+                    <th>Máquina</th>
+                    <th>Orden</th>
+                    <th>Última actualización</th>
+                    <th>Registro</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if user_profile.is_manager or user_profile.user.is_superuser %}
+                    {% for lot in lots %}
+                    <tr>
+                        <td>{{ lot.id }}</td>
+                        <td>{{ lot.user_ID.id }}</td>
+                        <td>{{ lot.stock }}</td>
+                        <td>{{ lot.product_ID }}</td>
+                        <td>{{ lot.production_Cost }}</td>
+                        <td>{{ lot.expiry_Date }}</td>
+                        <td>{{ lot.qualityStatus|yesno:"Aprovado,No Aprovado" }}</td>
+                        <td>{{ lot.machine_id.progresField }} %</td>
+                        <td>{{ lot.machine_id.progresField|yesno:"Orden Lista,Orden Pendiente" }}</td>
+                        <td>{{ lot.updated_at }}</td>
+                        <td>{{ lot.created_at }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    {% for lot in lots %}
+                    {% if lot.user_ID.id == user_profile.id %}
+                        <tr>
+                            <td>{{ lot.id }}</td>
+                            <td>{{ lot.user_ID.id }}</td>
+                            <td>{{ lot.stock }}</td>
+                            <td>{{ lot.product_ID }}</td>
+                            <td>{{ lot.production_Cost }}</td>
+                            <td>{{ lot.expiry_Date }}</td>
+                            <td>{{ lot.qualityStatus|yesno:"Aprovado,No Aprovado" }}</td>
+                            <td>{{ lot.machine_id.progresField }} %</td>
+                            <td>{{ lot.machine_id.progresField|yesno:"Orden Lista,Orden Pendiente" }}</td>
+                            <td>{{ lot.updated_at }}</td>
+                            <td>{{ lot.created_at }}</td>
+                        </tr>
                     {% endif %}
-                </td>
-                <td>{{ lot.machine_id.progresField }} %</td>
-                <td>
-                    {% if lot.machine_id.progresField < 100 %}
-                        Orden Pendiente
-                    {% else %}
-                        Orden Lista
-                    {% endif %}
-                </td>
-                <td>{{ lot.updated_at }}</td>
-                <td>{{ lot.created_at }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

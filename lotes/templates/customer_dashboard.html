@@ -4,17 +4,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cdashboard.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <title>Customer Dashboard</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome, Customer!</h1>
-        <nav>
-            <a href="{% url 'view_production' %}">View Production Status</a>
-            <a href="{% url 'view_products_and_flavors' %}">View Products and Flavors</a>
-            <a href="{% url 'logout' %}">Logout</a>
-        </nav>
+    <div class="container mt-5">
+        <header class="text-center mb-4">
+            <h1>Welcome, {{ user.username }}!</h1>
+            <p>Manage your orders and settings</p>
+        </header>
+        <div class="d-flex justify-content-center">
+            <nav class="nav flex-column bg-light p-3 rounded">
+                <a class="nav-link active" href="{% url 'lots' %}"><ion-icon name="layers-outline"></ion-icon> View Order</a>
+                <a class="nav-link" href="{% url 'xd' %}"><ion-icon name="construct-outline"></ion-icon> Create Order </a>
+                <a class="nav-link" href="{% url 'profile' %}"><ion-icon name="person-outline"></ion-icon> User Configuration</a>
+                <a class="nav-link" href="{% url 'logout' %}"><ion-icon name="log-out-outline"></ion-icon> Logout</a>
+            </nav>
+        </div>
+        <section class="mt-4">
+            <h3 class="text-center">Your Orders</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Client</th>
+                        <th>Items</th>
+                        <th>Product</th>
+                        <th>Production Cost</th>
+                        <th>Expiry Date</th>
+                        <th>Quality Status</th>
+                        <th>Machine Progress</th>
+                        <th>Order Status</th>
+                        <th>Last Updated</th>
+                        <th>Registered</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lot in lots %}
+                    {% if lot.user_ID.id == user_profile.id %}
+                    <tr>
+                        <td>{{ lot.id }}</td>
+                        <td>{{ lot.user_ID.id }}</td>
+                        <td>{{ lot.stock }}</td>
+                        <td>{{ lot.product_ID }}</td>
+                        <td>{{ lot.production_Cost }}</td>
+                        <td>{{ lot.expiry_Date }}</td>
+                        <td>{{ lot.qualityStatus|yesno:"Approved,Not Approved" }}</td>
+                        <td>{{ lot.machine_id.progresField }}%</td>
+                        <td>{{ lot.machine_id.progresField|yesno:"Order Complete,Order Pending" }}</td>
+                        <td>{{ lot.updated_at }}</td>
+                        <td>{{ lot.created_at }}</td>
+                    </tr>
+                    {% endif %}
+                    {% empty %}
+                    <tr>
+                        <td colspan="11">No lots found for you.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
     </div>
 </body>
 </html>
